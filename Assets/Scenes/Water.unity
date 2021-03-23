@@ -246,6 +246,7 @@ GameObject:
   m_Component:
   - component: {fileID: 433962979}
   - component: {fileID: 433962980}
+  - component: {fileID: 433962981}
   m_Layer: 0
   m_Name: UserPool
   m_TagString: Untagged
@@ -281,7 +282,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BTN_CreateTextUser: {fileID: 1016091316}
   effectRange: 10
-  particleRateNormal: 20
   UserAttachPointThreshold: 1.25
   countDeadToKill: 10
   UP_Prefab: {fileID: 6990923295437395403, guid: e5f44547454b3dd41a2545c445bec5ac,
@@ -291,6 +291,18 @@ MonoBehaviour:
   PTCollelct: []
   randX: 10
   randY: 5
+--- !u!114 &433962981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 433962978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e44df4432560c446950b0f377a7bfeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &461008979
 GameObject:
   m_ObjectHideFlags: 0
