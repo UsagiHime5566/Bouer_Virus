@@ -166,7 +166,7 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
                 possibleBlob.dblCurrentAspectRatio > acceptRatio - acceptRatioAllowance)
             {
                 currentFrameBlobs.Add(possibleBlob);
-                Debug.Log("泡泡寬度: " + possibleBlob.blobArea + " , 長寬比: " + possibleBlob.dblCurrentAspectRatio);
+                //Debug.Log("泡泡寬度: " + possibleBlob.blobArea + " , 長寬比: " + possibleBlob.dblCurrentAspectRatio);
             }
         }
 
@@ -182,7 +182,7 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
             float _x = (rawPoint.x / tex.width) * (sceneWidth * 2) - sceneWidth;
             float _y = -((rawPoint.y / tex.height) * (sceneHeight * 2) - sceneHeight);
 
-            UnityDetectResult.Add(new Vector3(_x, _y, 0));
+            UnityDetectResult.Add(new Vector3(_x, 0, _y));
         }
 
         //2019.06.25 測試用

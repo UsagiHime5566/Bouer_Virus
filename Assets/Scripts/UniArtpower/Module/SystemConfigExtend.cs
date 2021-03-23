@@ -45,7 +45,7 @@ public static class SystemConfigExtend
             SystemConfig.Instance.SaveData(savedString, result);
             changedToDo?.Invoke(result);
         });
-        inp.text = val.ToString("0.00");
+        inp.text = val.ToString("0");
     }
 
     public static void SetSavedDataFloat(this Slider sld, string savedString, float defValue, Action<float> changedToDo){

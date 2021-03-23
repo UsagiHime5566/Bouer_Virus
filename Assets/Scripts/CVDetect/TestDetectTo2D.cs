@@ -5,12 +5,11 @@ using UnityEngine.UI;
 
 public class TestDetectTo2D : MonoBehaviour
 {
+    [HimeLib.HelpBox] public string tip = "只要掛上此Comp, 就能自動讀取Manager中的最終偵測點, 並建立Prefab";
     public GameObject Prefab_pointObject;
     public Text debugMsg;
+    public bool ShowIcon = true;
 
-    bool ShowIcon = false;
-
-    // Update is called once per frame
     void Update()
     {
         if(debugMsg != null){
@@ -19,7 +18,7 @@ public class TestDetectTo2D : MonoBehaviour
         if(ShowIcon){
             foreach (var item in PositionManager.instance.UnityDetectResult)
             {
-                GameObject temp = Instantiate(Prefab_pointObject,item,Quaternion.identity);
+                GameObject temp = Instantiate(Prefab_pointObject, item, Quaternion.identity);
                 Destroy(temp,1);
             }
         }
