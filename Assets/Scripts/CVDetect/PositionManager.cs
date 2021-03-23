@@ -19,18 +19,13 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
     // public float YFractor = 2;
 
     [Header("偵測高度, 多少高度會被視為人")]
-    [Range(1, 255)]
-    public float detectThreshold = 30f;
+    [Range(1, 255)] public float detectThreshold = 30f;
 
     [Header("判定規則 (基礎大小, 容許誤差, 基礎形狀比, 容許誤差) , 在4公尺高時的基礎大小建議值為1200")]
-    [Range(0, 4000)]
     public int acceptRect = 1200;
-    [Range(10, 2000)]
     public int acceptRectAllowance = 800;
-    [Range(0.01f, 5f)]
-    public float acceptRatio = 1.0f;
-    [Range(0, 2)]
-    public float acceptRatioAllowance = 0.5f;
+    [Range(0.01f, 5f)] public float acceptRatio = 1.0f;
+    [Range(0, 2)] public float acceptRatioAllowance = 0.5f;
 
     [Header("最終輸出點,可直接存取")]
     public List<Vector3> UnityDetectResult = new List<Vector3>();
@@ -129,7 +124,7 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
         }
 
         Mat imgBinaryCopy = imgBinary.Clone();
-        Cv2.ImShow("imgThresh2", imgBinaryCopy);
+        // Cv2.ImShow("imgThresh2", imgBinaryCopy);
 
         //開始抓輪廓
         Point[][] contourPointGroup;
