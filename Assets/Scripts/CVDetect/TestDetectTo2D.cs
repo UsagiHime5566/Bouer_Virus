@@ -14,10 +14,10 @@ public class TestDetectTo2D : MonoBehaviour
     void Update()
     {
         if(debugMsg != null){
-            debugMsg.text = "Total Point: " + PositionManager.instance.DetectResult.Count;
+            debugMsg.text = "Total Point: " + PositionManager.instance.UnityDetectResult.Count;
         }
         if(ShowIcon){
-            foreach (var item in PositionManager.instance.DetectResult)
+            foreach (var item in PositionManager.instance.UnityDetectResult)
             {
                 GameObject temp = Instantiate(Prefab_pointObject,item,Quaternion.identity);
                 Destroy(temp,1);
