@@ -8,9 +8,8 @@ using Onoty3D.CharacterParticleAsset.Scripts;
 public class MyUserPool : HimeLib.SingletonMono<MyUserPool>
 {
     public Button BTN_CreateTextUser;
-    public float effectRange = 5;
-    public float particleRateNormal = 20;
-    public float UserAttachPointThreshold = 0.7f;
+    public float effectRange = 10;
+    public float UserAttachPointThreshold = 1.25f;
     public int countDeadToKill = 10;
 
     public UserPoint UP_Prefab;
