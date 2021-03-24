@@ -6,6 +6,7 @@ using UnityEngine;
 public class UserTree : MonoBehaviour
 {
     public ParticleSystem ParticleTree;
+    public ParticleSystem ParticleBrunch;
     public Transform Owner;
     void Start()
     {
@@ -22,11 +23,12 @@ public class UserTree : MonoBehaviour
 
     public async void DestroySelf(){
         ParticleTree.Stop();
+        ParticleBrunch.Stop();
         await Task.Delay(15000);
         
         if(this == null)
             return;
-            
+
         Destroy(gameObject);
     }
 }
