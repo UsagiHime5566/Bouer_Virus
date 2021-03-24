@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2629551860122730189}
   - component: {fileID: 6990923295437395403}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: User Sample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   bubbleEffect: {fileID: 8399523252097664509}
   countDead: 0
   rotateTime: 2.5
+  scaleTime: 3
 --- !u!1 &6041816994285020229
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +61,7 @@ GameObject:
   - component: {fileID: 419664647597811270}
   - component: {fileID: 1284364643873017957}
   - component: {fileID: 3083208050689932075}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: User Sample
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,6 +195,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Green Particle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7841301800328027743, guid: c5dc13c5f0ebe384b936c49e10bef585,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5dc13c5f0ebe384b936c49e10bef585, type: 3}
