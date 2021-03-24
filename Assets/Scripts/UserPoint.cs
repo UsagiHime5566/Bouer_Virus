@@ -13,6 +13,10 @@ public class UserPoint : MonoBehaviour
     public float rotateTime = 2.5f;
     public float scaleTime = 3;
 
+
+    //Child Tree
+    public UserTree targetTree;
+
     void Awake()
     {
         particles = new Dictionary<Transform, CharacterParticle>();
@@ -22,6 +26,8 @@ public class UserPoint : MonoBehaviour
         StartCoroutine(CheckTextAlive());
         moonCircle.DORotate(new Vector3(0, 360, 0), rotateTime, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
         moonCircle.DOScale(moonCircle.localScale * 0.5f, scaleTime).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InQuad);
+        targetTree = TreePool.instance.CreateNewUserTree(transform.position.x, transform.position.z);
+        targetTree.Owner = transform;
     }
 
     void Update()
@@ -34,7 +40,8 @@ public class UserPoint : MonoBehaviour
                 if(tmp) tmp.Stop();
                 Destroy(bubbleEffect, 3);
             }
-            
+
+            targetTree.DestroySelf();
             Destroy(gameObject);
         }
             
