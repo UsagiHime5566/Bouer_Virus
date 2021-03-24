@@ -1,4 +1,4 @@
-﻿Shader "Custom/StarBG"
+﻿Shader "Custom/Brick"
 {
     Properties
     {
@@ -80,62 +80,14 @@
 
 
 
-            #define NUM_LAYERS 5.
-
-            float2x2 Rot(float a){
-                float s=sin(a), c=cos(a);
-                return float2x2(c,-s,s,c);
-            }
-
-            float Star(vec2 uv, float flare){
-                float d = length(uv);//distance to the center 
-                float m = .03/d;//more light like than smoothstep(.1,.05,d);
-                
-                float rays= max(0.,1.-abs(uv.x*uv.y*1000.)); 
-                m +=rays*flare;
-                
-                uv = mul(Rot(3.1415/4.), uv);
-                rays= max(0.,1.-abs(uv.x*uv.y*1000.));
-                m+=rays*.5*flare;
-                m*=smoothstep(.5,.2,d);
-                
-                return m;
-
-
-            }
-
             float Hash21(vec2 p){
                 p = fract(p*vec2(123.34,456.21));
                 p += dot(p, p+45.32);
                 return fract(p.x*p.y);
-                
-
             }
 
-            vec3 StarLayer(vec2 uv) {
-                vec3 col = 0;
-                
-                vec2 gv = fract(uv)-.5;
-                vec2 id = floor(uv);
-                
-                // should add <=
-                for(int y=-1;y<=1;y++) {
-                    for(int x=-1;x<=1;x++) {
-                        vec2 offs = vec2(x, y);
-                        
-                        float n = Hash21(id+offs); // random between 0 and 1
-                        float size = fract(n*345.32);
-                        
-                        float star = Star(gv-offs-vec2(n, fract(n*34.))+.5, smoothstep(.6, 1., size)*.6);
-                        
-                        vec3 color = sin(vec3(.5, .1, .9)*fract(n*2345.2)*123.2)*.5+.5;
-                        color = color*vec3(1,.2,.8+size)+vec3(.2, .2, .1)*2.;
-                        
-                        star *= sin(iTime*2.+n*6.2831)*.5+1.;
-                        col += star*size*color;
-                    }
-                }
-                return col;
+            float rand(vec2 p){
+                return mix(.2, .7, Hash21(p));
             }
 
             fixed4 frag (v2f i) : SV_Target
@@ -156,42 +108,87 @@
                 fixed2 iResolution = fixed2(400, 400);
 
 
-                uv = (fragCoord-.5*iResolution.xy)/iResolution.y;
-                //vec2 M = (iMouse.xy-.5*iResolution.xy)/iResolution.y;
-                
-                float t = iTime*.03 * _Speed;
-                
-                uv = mul(Rot(t), uv);
-                uv.x+=max(t*.0001,1.);
-                uv.y-=max(t*.0001,.5);
+                uv = fragCoord / iResolution.y * 10.;
+    
+                uv.x += _Speed * iTime / 2.;
+                uv.y -= 10.;
 
-                vec3 col = 0;
+                vec2 f = fract(uv);
+                vec2 c = floor(uv);
                 
-                for (float i =0.; i <1.;i+=1./NUM_LAYERS){
-
-                    float depth = fract(i+t);
-                    float scale = mix (50.,2.,depth);
-                    float fade = depth*smoothstep(1., .9, depth);
-                    col += StarLayer(uv*scale+i*4532.)*fade;
-
+                vec2 texCoord = f;
+                vec2 tileCoord = c;
+                
+                float r0 = rand(floor(uv));
+                
+                int orientation = (int(c.x) + int(c.y)) & 1;
+                
+                //if(f[orientation] > r0)
+                //    tileCoord[orientation] += 1.;
+                if(f[orientation] > r0){
+                    if(orientation == 0)
+                        tileCoord.x += 1.;
+                    else if(orientation == 1)
+                        tileCoord.y += 1.;
                 }
-                
-                col = pow(col, vec3(.85,.85,.85));	// gamma correction
-                
-                
-                //if(gv.x>.48|| gv.y>.48) col.r=1.;//coloring the grid
-                
-                //col+=Hash21(id);
-                float cmx = 0;
-                cmx = max(cmx, col.x);
-                cmx = max(cmx, col.y);
-                cmx = max(cmx, col.z);
-                float dif = 1 - cmx;
-                col = vec3(col.x + dif, col.y + dif, col.z + dif);
-                //col += 1;
-                fragColor = vec4(col,1.0) * _Color1;
 
-                return fragColor + _Color2;
+                //texCoord[orientation] = abs(texCoord[orientation] - r0);
+                if(orientation == 0)
+                    texCoord.x = abs(texCoord[orientation] - r0);
+                else if(orientation == 1)
+                    texCoord.y = abs(texCoord[orientation] - r0);
+
+                vec2 cellOffset = 0;
+                
+                //cellOffset[orientation] = (f[orientation] > r0) ? +1. : -1.;
+                if(orientation == 0)
+                    cellOffset.x = (f[orientation] > r0) ? +1. : -1.;
+                else if(orientation == 1)
+                    cellOffset.y = (f[orientation] > r0) ? +1. : -1.;
+                
+                float r1 = rand(c + cellOffset);
+                
+                if(f[orientation ^ 1] > r1){
+                    if(orientation ^ 1 == 0)
+                        tileCoord.x += 1.;
+                    else
+                        tileCoord.y += 1.;
+                }
+                    
+                
+                //texCoord[orientation ^ 1] = abs(texCoord[orientation ^ 1] - r1);
+                if(orientation ^ 1 == 0)
+                    texCoord.x = abs(texCoord[orientation ^ 1] - r1);
+                else if(orientation ^ 1 == 1)
+                    texCoord.y = abs(texCoord[orientation ^ 1] - r1);
+                
+                
+                // Shading and colouration.
+                
+                
+                // Rounded box shape.
+                float mask = 1. - smoothstep(0., .01, distance(vec2(.1, .1), min(texCoord, 0.1)) - .05);
+                
+                // Corner 'bolts' shape.
+                mask *= smoothstep(.05, .06, distance(vec2(.15,.15), texCoord));
+                
+                // Randomised per-tile colour.
+                vec3 colour = .52 + .48 * cos(Hash21(tileCoord) * vec3(4, 2, 6) * 4.5 + 18.5);
+                
+                // Combine.
+                vec3 col = mix(vec3(.02, .02, .02), colour, mask);
+                
+                // Output.
+                fragColor = vec4(pow(col, vec3(1. / 2.2, 1. / 2.2, 1. / 2.2)), 1.0);
+                
+                float cmx = 0.;
+                cmx = max(cmx, fragColor.x);
+                cmx = max(cmx, fragColor.y);
+                cmx = max(cmx, fragColor.z);
+                float dif = 1. - cmx;
+                fragColor = vec4(fragColor.x + dif, fragColor.y + dif, fragColor.z + dif, 1);
+                
+                return fragColor * _Color1 + _Color2;
             }
 
             ENDCG

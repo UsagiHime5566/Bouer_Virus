@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StarFront
-  m_Shader: {fileID: 4800000, guid: eac5a2738e0ac1d4f981a828f9877b31, type: 3}
+  m_Name: Brick
+  m_Shader: {fileID: 4800000, guid: 98222b30084c98d48bdbdbda4131cde2, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -41,7 +41,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 0.5}
+        m_Scale: {x: 5, y: 5}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -79,6 +79,6 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1: {r: 1, g: 1, b: 1, a: 1}
-    - _Color2: {r: 0, g: 0, b: 0, a: 1}
+    - _Color1: {r: 1, g: 1, b: 1, a: 0}
+    - _Color2: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

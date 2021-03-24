@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: StarGround
-  m_Shader: {fileID: 4800000, guid: 7b639f7ee7795774ebdd50b4caba5def, type: 3}
+  m_Shader: {fileID: 4800000, guid: eac5a2738e0ac1d4f981a828f9877b31, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -80,5 +80,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color1: {r: 1, g: 1, b: 1, a: 1}
-    - _Color2: {r: 0.67, g: 0.85, b: 0.8, a: 1}
+    - _Color2: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

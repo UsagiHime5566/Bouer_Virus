@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Onoty3D.CharacterParticleAsset.Scripts;
+using DG.Tweening;
 
 public class UserPoint : MonoBehaviour
 {
+    public Transform moonCircle;
+    public GameObject bubbleEffect;
     public Dictionary<Transform, CharacterParticle> particles;
     public int countDead = 0;
+    public float rotateTime = 2.5f;
 
     void Awake()
     {
@@ -15,13 +19,21 @@ public class UserPoint : MonoBehaviour
 
     void Start(){
         StartCoroutine(CheckTextAlive());
+        moonCircle.DORotate(new Vector3(0, 360, 0), rotateTime, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart);
     }
 
     void Update()
     {
         CheckUserInRange();
-        if(countDead >= MyUserPool.instance.countDeadToKill)
+        if(countDead >= MyUserPool.instance.countDeadToKill){
+
+            bubbleEffect.transform.parent = null;
+            var emt = bubbleEffect.GetComponent<ParticleSystem>().emission;
+            emt.enabled = false;
+            Destroy(bubbleEffect, 3);
             Destroy(gameObject);
+        }
+            
     }
 
     public void DeleteTextWithKey(Transform key){

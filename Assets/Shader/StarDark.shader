@@ -1,4 +1,4 @@
-﻿Shader "Custom/StarBG"
+﻿Shader "Custom/Star Dark"
 {
     Properties
     {
@@ -182,14 +182,8 @@
                 //if(gv.x>.48|| gv.y>.48) col.r=1.;//coloring the grid
                 
                 //col+=Hash21(id);
-                float cmx = 0;
-                cmx = max(cmx, col.x);
-                cmx = max(cmx, col.y);
-                cmx = max(cmx, col.z);
-                float dif = 1 - cmx;
-                col = vec3(col.x + dif, col.y + dif, col.z + dif);
-                //col += 1;
-                fragColor = vec4(col,1.0) * _Color1;
+
+                fragColor = vec4(col, 1.0);
 
                 return fragColor + _Color2;
             }
