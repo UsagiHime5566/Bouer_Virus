@@ -20142,7 +20142,7 @@ MonoBehaviour:
   repeatY: 1.1
   speed: 1
   gridMaterial: {fileID: 2100000, guid: e05f0ee92084bd54e99f95380aec4aff, type: 2}
-  colorDuration: 3
+  colorDuration: 5
 --- !u!114 &6815349963105549076
 MonoBehaviour:
   m_ObjectHideFlags: 0
