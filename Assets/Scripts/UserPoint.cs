@@ -11,6 +11,7 @@ public class UserPoint : MonoBehaviour
     public Dictionary<Transform, CharacterParticle> particles;
     public int countDead = 0;
     public float rotateTime = 2.5f;
+    public float scaleTime = 3;
 
     void Awake()
     {
@@ -19,18 +20,21 @@ public class UserPoint : MonoBehaviour
 
     void Start(){
         StartCoroutine(CheckTextAlive());
-        moonCircle.DORotate(new Vector3(0, 360, 0), rotateTime, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart);
+        moonCircle.DORotate(new Vector3(0, 360, 0), rotateTime, RotateMode.FastBeyond360).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
+        moonCircle.DOScale(moonCircle.localScale * 0.5f, scaleTime).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InQuad);
     }
 
     void Update()
     {
         CheckUserInRange();
         if(countDead >= MyUserPool.instance.countDeadToKill){
-
-            bubbleEffect.transform.parent = null;
-            var emt = bubbleEffect.GetComponent<ParticleSystem>().emission;
-            emt.enabled = false;
-            Destroy(bubbleEffect, 3);
+            if(bubbleEffect != null){
+                bubbleEffect.transform.parent = null;
+                var tmp = bubbleEffect.GetComponent<ParticleSystem>();
+                if(tmp) tmp.Stop();
+                Destroy(bubbleEffect, 3);
+            }
+            
             Destroy(gameObject);
         }
             

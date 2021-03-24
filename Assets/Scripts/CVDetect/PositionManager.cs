@@ -12,9 +12,11 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
     [Header("攝影機設定 (翻轉)")]
     public bool flipY = false;
 
-    [Header("場景長寬 (Unity 單位), 輸出轉換用 , 濾掉不要的部分高")]
+    [Header("場景長寬 (Unity 單位), 鏡頭XY軸偏移")]
     public float sceneWidth = 10;
     public float sceneHeight = 5;
+    public float X_Shift = 0;
+    public float Y_Shift = 0;
     // public int noUseHeight = 20;
     // public float YFractor = 2;
 
@@ -48,6 +50,10 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
     //所有觀眾座標資料
     List<Blob> AvaliableBlobs = new List<Blob>();
     List<Blob> currentFrameBlobs = new List<Blob>();
+
+    //除錯用
+    Vector3 TestPosA;
+    Vector3 TestPosB;
 
     Mat TextureToCVMat(Texture2D texData)
     {
@@ -88,6 +94,32 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
         imgNext = TextureToCVMat(InfraredSourceManager.instance.GetInfraredTexture());
 
         InfraredSourceManager.instance.OnNewTextureArrived += ProccessTexture;
+    }
+
+    //除錯用
+    void Update(){
+        if(Input.GetMouseButton(0)){
+            UnityDetectResult.Clear();
+            //CV跟Unity 中心座標不一樣、Y值正方向座標不一樣
+            Vector3 rawPoint = new Vector2((Input.mousePosition.x / Screen.width) * 512, (Input.mousePosition.y / Screen.height) * 424);
+            float _x = (rawPoint.x / 512) * (sceneWidth * 2) - sceneWidth;
+            float _y = (rawPoint.y / 424) * (sceneHeight * 2) - sceneHeight;
+
+            TestPosA = new Vector3(_x, 0, _y);
+            UnityDetectResult.Add(TestPosA);
+            UnityDetectResult.Add(TestPosB);
+        }
+        if(Input.GetMouseButton(1)){
+            UnityDetectResult.Clear();
+            //CV跟Unity 中心座標不一樣、Y值正方向座標不一樣
+            Vector3 rawPoint = new Vector2((Input.mousePosition.x / Screen.width) * 512, (Input.mousePosition.y / Screen.height) * 424);
+            float _x = (rawPoint.x / 512) * (sceneWidth * 2) - sceneWidth;
+            float _y = (rawPoint.y / 424) * (sceneHeight * 2) - sceneHeight;
+
+            TestPosB = new Vector3(_x, 0, _y);
+            UnityDetectResult.Add(TestPosA);
+            UnityDetectResult.Add(TestPosB);
+        }
     }
 
     void ProccessTexture(Texture2D tex)
@@ -182,7 +214,7 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
             float _x = (rawPoint.x / tex.width) * (sceneWidth * 2) - sceneWidth;
             float _y = -((rawPoint.y / tex.height) * (sceneHeight * 2) - sceneHeight);
 
-            UnityDetectResult.Add(new Vector3(_x, 0, _y));
+            UnityDetectResult.Add(new Vector3(_x + X_Shift, 0, _y + Y_Shift));
         }
 
         //2019.06.25 測試用

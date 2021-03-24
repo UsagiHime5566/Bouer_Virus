@@ -8,6 +8,7 @@ public class PositionManagerHelper : MonoBehaviour
 {
     public Text TXT_ScenceWidth;
     public Text TXT_ScenceHeight;
+    public Text TXT_XYBias;
     public Slider SLD_DetectThreshold;
     public Text TXT_DetectThresholdValue;
     public InputField INP_AllowSizeBase;
@@ -27,6 +28,10 @@ public class PositionManagerHelper : MonoBehaviour
         positionManager.sceneHeight = SystemConfig.Instance.GetData<float>("PM_SceneHeight", 5);
         TXT_ScenceHeight.text = positionManager.sceneHeight.ToString("0.00");
         TXT_ScenceWidth.text = positionManager.sceneWidth.ToString("0.00");
+        positionManager.X_Shift = SystemConfig.Instance.GetData<float>("PM_XBias", 0);
+        positionManager.Y_Shift = SystemConfig.Instance.GetData<float>("PM_YBias", 0);
+        TXT_XYBias.text = positionManager.X_Shift.ToString("0.00") + ", " + positionManager.Y_Shift.ToString("0.00");
+
 
         //Threshold
         SLD_DetectThreshold.SetSavedDataFloat("PM_DetectHeight", 120, x => {
@@ -65,6 +70,28 @@ public class PositionManagerHelper : MonoBehaviour
             positionManager.sceneWidth += SceneAdjustSpeed * Time.deltaTime;
             TXT_ScenceWidth.text = positionManager.sceneWidth.ToString("0.00");
             SystemConfig.Instance.SaveData("PM_SceneWidth", positionManager.sceneWidth);
+        }
+
+        //XY Bias
+        if(Input.GetKey(KeyCode.O)){
+            positionManager.X_Shift -= SceneAdjustSpeed * Time.deltaTime;
+            TXT_XYBias.text = positionManager.X_Shift.ToString("0.00") + ", " + positionManager.Y_Shift.ToString("0.00");
+            SystemConfig.Instance.SaveData("PM_XBias", positionManager.X_Shift);
+        }
+        if(Input.GetKey(KeyCode.P)){
+            positionManager.X_Shift += SceneAdjustSpeed * Time.deltaTime;
+            TXT_XYBias.text = positionManager.X_Shift.ToString("0.00") + ", " + positionManager.Y_Shift.ToString("0.00");
+            SystemConfig.Instance.SaveData("PM_XBias", positionManager.X_Shift);
+        }
+        if(Input.GetKey(KeyCode.K)){
+            positionManager.Y_Shift -= SceneAdjustSpeed * Time.deltaTime;
+            TXT_XYBias.text = positionManager.X_Shift.ToString("0.00") + ", " + positionManager.Y_Shift.ToString("0.00");
+            SystemConfig.Instance.SaveData("PM_YBias", positionManager.Y_Shift);
+        }
+        if(Input.GetKey(KeyCode.L)){
+            positionManager.Y_Shift += SceneAdjustSpeed * Time.deltaTime;
+            TXT_XYBias.text = positionManager.X_Shift.ToString("0.00") + ", " + positionManager.Y_Shift.ToString("0.00");
+            SystemConfig.Instance.SaveData("PM_YBias", positionManager.Y_Shift);
         }
     }
 }
