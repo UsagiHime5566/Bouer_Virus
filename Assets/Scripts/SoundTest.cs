@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SoundTest : HimeLib.SingletonMono<SoundTest>
 {
+    public bool act;
     public List<AudioSource> audioSource;
+    public AudioClip clip;
     public float pinch = 2;
     public float vol = 1;
 
@@ -14,6 +16,7 @@ public class SoundTest : HimeLib.SingletonMono<SoundTest>
         {
             item.pitch = pinch;
             item.volume = vol;
+            item.clip = clip;
         }
     }
     void Update()
@@ -24,6 +27,9 @@ public class SoundTest : HimeLib.SingletonMono<SoundTest>
     }
 
     public void PlayShot(){
+        if(!act)
+            return;
+            
         int rand = Random.Range(0, audioSource.Count);
         audioSource[rand].PlayOneShot(audioSource[rand].clip); 
     }
