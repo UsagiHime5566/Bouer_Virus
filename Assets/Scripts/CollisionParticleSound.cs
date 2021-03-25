@@ -12,7 +12,7 @@ public class CollisionParticleSound : MonoBehaviour
         if(cur > affectCount){
             SoundTest.instance.PlayShot();
             cur = 0;
-            Debug.Log("Curr");
+            //Debug.Log("Curr");
         }
     }
 }

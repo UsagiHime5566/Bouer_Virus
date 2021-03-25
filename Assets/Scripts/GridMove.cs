@@ -8,7 +8,7 @@ public class GridMove : MonoBehaviour
     public float repeatY = 1;
     public float speed = 1;
     public Material gridMaterial;
-    public float colorDuration = 3;
+    public float colorDuration = 5;
     void Start()
     {
         transform.DOMoveY(-repeatY, speed).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
