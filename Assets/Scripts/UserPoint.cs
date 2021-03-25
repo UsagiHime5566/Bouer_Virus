@@ -7,7 +7,7 @@ using DG.Tweening;
 public class UserPoint : MonoBehaviour
 {
     public Transform moonCircle;
-    public GameObject bubbleEffect;
+    public ParticleSystem bubbleEffect;
     public Dictionary<Transform, CharacterParticle> particles;
     public int countDead = 0;
     public float rotateTime = 2.5f;
@@ -17,9 +17,17 @@ public class UserPoint : MonoBehaviour
     //Child Tree
     public UserTree targetTree;
 
+    //Particle Health
+    public int infectionSpeed = 5;
+    public float currentInfection = 0.33f;
+
+    CollisionParticleSound collisionParticleSound;
+    
+
     void Awake()
     {
         particles = new Dictionary<Transform, CharacterParticle>();
+        collisionParticleSound = GetComponent<CollisionParticleSound>();
     }
 
     void Start(){
@@ -28,6 +36,20 @@ public class UserPoint : MonoBehaviour
         moonCircle.DOScale(moonCircle.localScale * 0.5f, scaleTime).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InQuad);
         targetTree = TreePool.instance.CreateNewUserTree(transform.position.x, transform.position.z);
         targetTree.Owner = transform;
+
+        var c = bubbleEffect.main.startColor.colorMax;
+        float H, S, V;
+        Color.RGBToHSV(c, out H, out S, out V);
+        //Debug.Log("H: " + H + " S: " + S + " V: " + V);
+        currentInfection = H;
+
+        collisionParticleSound.OnVirusHit += delegate {
+            var m = bubbleEffect.main;
+            m.startColor = new ParticleSystem.MinMaxGradient(Color.HSVToRGB(currentInfection + 0.166f, 1, 1), Color.HSVToRGB(currentInfection, 1, 1));
+            //m.colorMin = Color.HSVToRGB(colorHsv, 1, 1);
+            //m.colorMax = Color.HSVToRGB(colorHsv + 0.166f, 1, 1);
+            currentInfection = Mathf.Max(-0.166f, currentInfection - infectionSpeed/360.0f);
+        };
     }
 
     void Update()
@@ -36,9 +58,8 @@ public class UserPoint : MonoBehaviour
         if(countDead >= MyUserPool.instance.countDeadToKill){
             if(bubbleEffect != null){
                 bubbleEffect.transform.parent = null;
-                var tmp = bubbleEffect.GetComponent<ParticleSystem>();
-                if(tmp) tmp.Stop();
-                Destroy(bubbleEffect, 3);
+                bubbleEffect.Stop();
+                Destroy(bubbleEffect.gameObject, 3);
             }
 
             targetTree.DestroySelf();
