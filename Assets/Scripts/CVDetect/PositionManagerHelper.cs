@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using OpenCvSharp;
+using OpenCvSharp.CPlusPlus;
 
 [RequireComponent(typeof(PositionManager))]
 public class PositionManagerHelper : MonoBehaviour
@@ -13,6 +15,8 @@ public class PositionManagerHelper : MonoBehaviour
     public Text TXT_DetectThresholdValue;
     public InputField INP_AllowSizeBase;
     public InputField INP_AllowSizeAdjust;
+    public RawImage RI_DebugPreview;
+    public Toggle TG_ShowDebugImg;
 
     public float SceneAdjustSpeed = 1.0f;
     PositionManager positionManager;
@@ -47,6 +51,19 @@ public class PositionManagerHelper : MonoBehaviour
             positionManager.acceptRectAllowance = Mathf.FloorToInt(x);
         });
 
+        positionManager.OnResultImgComplete += OnDebugImgComing;
+        TG_ShowDebugImg.onValueChanged.AddListener(x => {
+            RI_DebugPreview.gameObject.SetActive(x);
+        });
+    }
+
+    void OnDebugImgComing(Mat mat){
+        if(TG_ShowDebugImg.isOn){
+            Texture2D tex = new Texture2D(mat.Width, mat.Height, TextureFormat.RGB24, false, false);
+            tex.LoadImage(mat.ToBytes(".png"));
+            tex.Apply();
+            RI_DebugPreview.texture = tex;
+        }
     }
 
     void Update()

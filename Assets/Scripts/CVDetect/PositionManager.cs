@@ -31,6 +31,8 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
 
     [Header("最終輸出點,可直接存取")]
     public List<Vector3> UnityDetectResult = new List<Vector3>();
+    
+    public Action<Mat> OnResultImgComplete;
 
 
     //影像處理變數
@@ -184,7 +186,7 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
         }
 
         //2019.06.25 畫出區塊
-        drawAndShowContours(imgBinary.Size(), convexHulls, "imgConvexHulls");
+        //drawAndShowContours(imgBinary.Size(), convexHulls, "imgConvexHulls");
 
         foreach (Point[] item in convexHulls)
         {
@@ -221,7 +223,8 @@ public class PositionManager : HimeLib.SingletonMono<PositionManager>
         //get another copy of frame 2 since we changed the previous frame 2 copy in the processing above
         Mat imgTempShow = imgNext.Clone();
         DrawBlobInfoOnMat(AvaliableBlobs, imgTempShow);
-        Cv2.ImShow("ResultDetect", imgTempShow);
+        OnResultImgComplete?.Invoke(imgTempShow);
+        //Cv2.ImShow("ResultDetect", imgTempShow);
 
         //重設目前Frame 存在的人
         currentFrameBlobs.Clear();
