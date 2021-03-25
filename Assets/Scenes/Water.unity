@@ -29051,8 +29051,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e70de953fb7573840af16441e62d26be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  act: 0
   audioSource: []
-  clip: {fileID: 8300000, guid: 754ca0da11887c945969e85c3979e709, type: 3}
+  clip: {fileID: 8300000, guid: 4507edba77e9e484ab6072362b2aab5b, type: 3}
   pinch: 1
   vol: 0.2
 --- !u!82 &1357725454
