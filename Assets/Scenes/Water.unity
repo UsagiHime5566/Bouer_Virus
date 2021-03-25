@@ -8040,7 +8040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectRange: 14
-  UserAttachPointThreshold: 1.25
+  UserAttachPointThreshold: 1.75
   countDeadToKill: 10
   UP_Prefab: {fileID: 6990923295437395403, guid: e5f44547454b3dd41a2545c445bec5ac,
     type: 3}

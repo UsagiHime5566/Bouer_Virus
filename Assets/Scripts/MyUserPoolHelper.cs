@@ -11,7 +11,7 @@ public class MyUserPoolHelper : MonoBehaviour
         myUserPool = GetComponent<MyUserPool>();
 
         myUserPool.effectRange = SystemConfig.Instance.GetData<float>("Pool_EffectRange", 10);
-        myUserPool.UserAttachPointThreshold = SystemConfig.Instance.GetData<float>("Pool_AttachThreshold", 1.25f);
+        myUserPool.UserAttachPointThreshold = SystemConfig.Instance.GetData<float>("Pool_AttachThreshold", 1.75f);
         myUserPool.countDeadToKill = SystemConfig.Instance.GetData<int>("Pool_CountDead", 10);
         
         ApplicationDelegate.instance.ToDoOnQuit += SavedValues;
