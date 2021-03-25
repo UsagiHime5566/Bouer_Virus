@@ -12,10 +12,10 @@ public class GridMove : MonoBehaviour
     void Start()
     {
         transform.DOMoveY(-repeatY, speed).SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
-        gridMaterial.DOColor(Color.black, colorDuration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InQuad);
+        gridMaterial.DOFade(0, colorDuration).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InQuad);
     }
 
     void OnApplicationQuit() {
-        gridMaterial.color = new Color32(0, 165, 0, 1);
+        gridMaterial.color = new Color32(0, 165, 0, 165);
     }
 }
