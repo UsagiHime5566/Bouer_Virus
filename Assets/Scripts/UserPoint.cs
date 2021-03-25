@@ -85,7 +85,7 @@ public class UserPoint : MonoBehaviour
                 }
                 //particles[item].GetComponent<ParticleSystem>().Play();
                 particles[item].transform.LookAt(item);
-                string nextText = (distance * 100).ToString("0");
+                string nextText = (distance * 30).ToString("0");
                 if(particles[item].Text != nextText)
                     particles[item].Text = nextText;
                 
