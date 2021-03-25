@@ -16,6 +16,6 @@ public class GridMove : MonoBehaviour
     }
 
     void OnApplicationQuit() {
-        gridMaterial.color = new Color32(0, 75, 0, 1);
+        gridMaterial.color = new Color32(0, 165, 0, 1);
     }
 }
