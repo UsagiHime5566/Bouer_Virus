@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2629551860122730189}
   - component: {fileID: 6990923295437395403}
+  - component: {fileID: 4715606556565690825}
+  - component: {fileID: 6195071781004266235}
   - component: {fileID: 8693227495382991982}
   m_Layer: 12
   m_Name: User Sample
@@ -51,6 +53,33 @@ MonoBehaviour:
   countDead: 0
   rotateTime: 2.5
   scaleTime: 3
+  targetTree: {fileID: 0}
+--- !u!135 &4715606556565690825
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307542135217835230}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.35
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6195071781004266235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307542135217835230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde707dab42410d44866d5a449aff85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  affectCount: 2
 --- !u!330 &8693227495382991982
 ParticleSystemForceField:
   m_ObjectHideFlags: 0
