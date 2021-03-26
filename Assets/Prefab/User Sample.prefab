@@ -56,6 +56,7 @@ MonoBehaviour:
   scaleTime: 3
   targetTree: {fileID: 0}
   infectionSpeed: 5
+  currentInfection: 0.33
 --- !u!135 &4715606556565690825
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -618,7 +619,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 476df81b726776b40992c7f3e1216f95, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9019ff1475858dd489320b57b042cbe0, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
